@@ -1,0 +1,65 @@
+.ag-theme-alpine {
+  --ag-header-foreground-color: white;
+  --ag-header-background-color: rgb(3, 72, 72);
+  --ag-borders: none;
+  --ag-row-border-style: solid;
+  --ag-row-border-color: white;
+  --ag-cell-horizontal-border: solid white;
+}
+
+/* Adjust font size in header cells */
+.ag-theme-alpine .ag-header-group-cell,
+.ag-theme-alpine .ag-header-cell {
+  font-size: 16px;
+}
+
+/* Custom style for the sorting arrows */
+.ag-theme-alpine .ag-header-cell-label .ag-icon {
+  color: #ffffff; /* Change this to your desired color */
+  font-size: 12px; /* Optional: adjust size if needed */
+}
+
+/* Style the pagination buttons */
+.ag-theme-alpine .ag-paging-button,
+.ag-theme-alpine .ag-paging-button-disabled {
+  background-color: rgb(3, 72, 72); /* Match header background */
+  border: 2px solid transparent; /* Border set to transparent to add curve without visible border */
+  border-radius: 4px; /* Slightly rounded corners */
+  padding: 5px 10px;
+  margin: 0 2px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ag-theme-alpine .ag-paging-button .ag-icon {
+  color: #ffffff;
+}
+
+/* Style for hover state */
+.ag-theme-alpine .ag-paging-button:hover:not(.ag-paging-button-disabled) {
+  background-color: rgb(10, 90, 90); /* Slightly lighter on hover */
+}
+
+/* Optional: Style the current page indicator */
+.ag-theme-alpine .ag-paging-number {
+  font-weight: bold;
+}
+
+/* Style the "Page Size" picker container */
+.ag-picker-field.ag-labeled.ag-label-align-left.ag-select {
+  display: flex;
+  align-items: center;
+}
+.ag-picker-field.ag-labeled.ag-label-align-left.ag-select #ag-14-label {
+  color: black;
+  font-weight: bold;
+}
+/* Style the dropdown wrapper with border and padding */
+.ag-picker-field .ag-wrapper.ag-picker-field-wrapper {
+  border: 1px solid black; /* Border color to match header */
+  border-radius: 6px; /* Rounded corners */
+  padding: 5px 10px;
+  cursor: pointer;
+}
