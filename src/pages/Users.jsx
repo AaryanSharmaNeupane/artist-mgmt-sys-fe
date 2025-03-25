@@ -5,8 +5,19 @@ import * as Yup from "yup";
 import { Textfield } from "../components/TextField";
 import { CustomButtons } from "../components/CustomButtons";
 import { DateField } from "../components/DateField";
-
+import {
+  useCreateData,
+  useFetchData,
+  useDeleteData,
+  useUpdateData,
+} from "../hooks/useCustomHooks";
+import { baseUrl } from "../api/BaseUrl";
 export const Users = () => {
+  const { data: users, setData } = useFetchData(`${baseUrl}/users/get/`);
+  const { createData } = useCreateData(`${baseUrl}/users/add/`);
+  const { deleteData } = useDeleteData(`${baseUrl}/users/delete/`);
+  const { updateData } = useUpdateData(`${baseUrl}/users/update/`);
+
   const colDefs = [
     { field: "fname", headerName: "First Name" },
     { field: "lname", headerName: "Last Name" },
@@ -18,17 +29,16 @@ export const Users = () => {
     { field: "Action" },
   ];
 
-  const rowData = [
-    {
-      fname: "John",
-      lname: "Doe",
-      gender: "male",
-      email: "kA8YF@example.com",
-      phone: "1234567890",
-      dob: "1990-01-01",
-      address: "123 Main St, City, State, Country",
-    },
-  ];
+  const rowData = users.map((user) => ({
+    id: user.id,
+    fname: user.fname,
+    lname: user.lname,
+    gender: user.gender,
+    email: user.email,
+    phone: user.phone,
+    dob: user.dob,
+    address: user.address,
+  }));
 
   const [editData, setEditData] = useState(null);
 
@@ -52,15 +62,19 @@ export const Users = () => {
     gender: "",
   };
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async (values, { resetForm }) => {
     if (editData !== null) {
-      console.log("Updated Data:", editData);
-      setEditData(null);
+      await updateData(values, setData);
+      await setEditData(null);
       resetForm();
     } else {
-      console.log("New Data:", values);
+      await createData(values, setData);
       resetForm();
     }
+  };
+
+  const handleDelete = async (row) => {
+    await deleteData(row, setData);
   };
 
   return (
@@ -164,7 +178,9 @@ export const Users = () => {
               onEditClick={(row) => {
                 setEditData(row);
               }}
-              onDeleteClick={() => {}}
+              onDeleteClick={(row) => {
+                handleDelete(row);
+              }}
             />
           </div>
         </div>
