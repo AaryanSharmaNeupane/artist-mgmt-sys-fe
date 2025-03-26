@@ -12,11 +12,13 @@ import {
   useUpdateData,
 } from "../hooks/useCustomHooks";
 import { baseUrl } from "../api/BaseUrl";
+import { useNavigate } from "react-router";
 export const Artist = () => {
   const { data: artists, setData } = useFetchData(`${baseUrl}artist/get/`);
   const { createData } = useCreateData(`${baseUrl}artist/add/`);
   const { deleteData } = useDeleteData(`${baseUrl}artist/delete`);
   const { updateData } = useUpdateData(`${baseUrl}artist/update/`);
+  const navigate = useNavigate();
 
   const colDefs = [
     { field: "name", headerName: "Name" },
@@ -140,7 +142,7 @@ export const Artist = () => {
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      <option value="others">Others</option>
                     </Field>
                     <ErrorMessage
                       name="gender"
@@ -183,6 +185,10 @@ export const Artist = () => {
               onDeleteClick={(row) => {
                 handleDelete(row);
               }}
+              onViewClick={(row) => {
+                navigate("/artist/music", { state: { artistId: row } });
+              }}
+              showViewButton={true}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Route, Routes } from "react-router";
 
-import { Dashboard, ErrorPage, Users, Artist } from "../pages";
+import { Dashboard, ErrorPage, Users, Artist, Music } from "../pages";
 
 export const AllRoutes = () => {
   return (
@@ -11,7 +11,10 @@ export const AllRoutes = () => {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/user" element={<Users />} />
-        <Route path="/artist" element={<Artist />} />
+        <Route path="/artist">
+          <Route index element={<Artist />} />
+          <Route path="music" element={<Music />} />
+        </Route>
       </Routes>
     </>
   );

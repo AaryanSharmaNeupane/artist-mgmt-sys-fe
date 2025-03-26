@@ -5,12 +5,15 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import "./CustomTable.css";
 import { FaEdit } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 export const CustomTable = ({
   columnDefs,
   rowData,
   onDeleteClick,
   onEditClick,
+  onViewClick,
+  showViewButton = false,
 }) => {
   const cellStyle = {
     fontSize: "16px",
@@ -32,19 +35,30 @@ export const CustomTable = ({
                     <div className="flex pt-2">
                       <button
                         onClick={() => onEditClick(row.data)}
-                        className="px-8"
+                        className="pr-4"
                       >
                         <FaEdit
                           size={16}
                           className="text-successColor cursor-pointer"
                         />
                       </button>
-                      <button onClick={() => onDeleteClick(row.data.id)}>
+                      <button
+                        onClick={() => onDeleteClick(row.data.id)}
+                        className="pr-4"
+                      >
                         <MdOutlineDeleteForever
                           size={20}
                           className="mx-6 text-errorColor cursor-pointer"
                         />
                       </button>
+                      {showViewButton && (
+                        <button onClick={() => onViewClick(row.data.id)}>
+                          <FaEye
+                            size={20}
+                            className="mx-6  text-primaryColor cursor-pointer"
+                          />
+                        </button>
+                      )}
                     </div>
                   )
                 : undefined,

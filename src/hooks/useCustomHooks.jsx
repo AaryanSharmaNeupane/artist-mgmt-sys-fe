@@ -27,6 +27,7 @@ export const useCreateData = (url) => {
   const createData = async (newData, setData) => {
     try {
       const response = await axios.post(url, newData);
+
       if (response.data.status === 200) {
         toast.success("Data created successfully");
         setData((prevData) => [
