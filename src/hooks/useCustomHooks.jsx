@@ -2,20 +2,23 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const useFetchData = (url) => {
+export const useFetchData = (url, id = null) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          params: id ? { id } : {},
+        });
+
         setData(response.data.data);
       } catch (error) {
         toast.error("Error fetching data: " + error.message);
       }
     };
     fetchData();
-  }, [url]);
+  }, [url, id]);
 
   return { data, setData };
 };
@@ -28,7 +31,7 @@ export const useCreateData = (url) => {
         toast.success("Data created successfully");
         setData((prevData) => [
           { id: response.data.data.id, ...newData },
-          ...prevData,
+          ...(prevData || []),
         ]);
       } else {
         toast.error(response.data.errorMessage);
@@ -45,7 +48,7 @@ export const useCreateData = (url) => {
 export const useDeleteData = (url) => {
   const deleteData = async (id, setData) => {
     try {
-      await axios.delete(`${url}${id}/`);
+      await axios.delete(url, { params: { id } });
       toast.success("Data deleted successfully");
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
@@ -62,7 +65,6 @@ export const useUpdateData = (url) => {
     try {
       const response = await axios.put(`${url}`, updatedData);
       if (response.data.status === 200) {
-        console.log(response.data.data);
         setData((prevData) =>
           prevData.map((item) =>
             item.id == response.data.data.id ? response.data.data : item

@@ -13,10 +13,10 @@ import {
 } from "../hooks/useCustomHooks";
 import { baseUrl } from "../api/BaseUrl";
 export const Users = () => {
-  const { data: users, setData } = useFetchData(`${baseUrl}/users/get/`);
-  const { createData } = useCreateData(`${baseUrl}/users/add/`);
-  const { deleteData } = useDeleteData(`${baseUrl}/users/delete/`);
-  const { updateData } = useUpdateData(`${baseUrl}/users/update/`);
+  const { data: users, setData } = useFetchData(`${baseUrl}users/get/`);
+  const { createData } = useCreateData(`${baseUrl}users/add/`);
+  const { deleteData } = useDeleteData(`${baseUrl}users/delete`);
+  const { updateData } = useUpdateData(`${baseUrl}users/update/`);
 
   const colDefs = [
     { field: "fname", headerName: "First Name" },
@@ -29,16 +29,19 @@ export const Users = () => {
     { field: "Action" },
   ];
 
-  const rowData = users.map((user) => ({
-    id: user.id,
-    fname: user.fname,
-    lname: user.lname,
-    gender: user.gender,
-    email: user.email,
-    phone: user.phone,
-    dob: user.dob,
-    address: user.address,
-  }));
+  const rowData =
+    users !== null
+      ? users.map((user) => ({
+          id: user.id,
+          fname: user.fname,
+          lname: user.lname,
+          gender: user.gender,
+          email: user.email,
+          phone: user.phone,
+          dob: user.dob,
+          address: user.address,
+        }))
+      : [];
 
   const [editData, setEditData] = useState(null);
 
