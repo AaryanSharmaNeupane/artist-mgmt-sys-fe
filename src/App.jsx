@@ -1,15 +1,38 @@
 import "./App.css";
-import { Drawer } from "./components/Drawer";
 import { Header } from "./components/Header";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-function App() {
+import { Drawer } from "./components/Drawer";
+import { Navigate, Route, Router, Routes, useLocation } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { Login } from "./pages/Login";
+
+const Layout = () => {
+  const { token } = useAuth();
+  const location = useLocation();
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/signup";
+
   return (
     <>
       <ToastContainer />
-      <Header />
-      <Drawer />
+      {!isAuthPage && token ? (
+        <>
+          <Header />
+          <Drawer />
+        </>
+      ) : (
+        <Login />
+      )}
     </>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <Layout />
+    </AuthProvider>
   );
 }
 

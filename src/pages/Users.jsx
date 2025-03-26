@@ -141,32 +141,7 @@ export const Users = () => {
                     value={formik.values.address}
                     onChange={formik.handleChange}
                   />
-                  <div className="flex flex-col w-full">
-                    <div>
-                      <label
-                        htmlFor="gender"
-                        className="font-semibold text-gray-700 mb-1"
-                      >
-                        Gender
-                      </label>
-                      <span className="text-errorColor">*</span>
-                    </div>
-                    <Field
-                      as="select"
-                      name="gender"
-                      className="border-2 border-primary p-2"
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="others">Others</option>
-                    </Field>
-                    <ErrorMessage
-                      name="gender"
-                      component="div"
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
+                 
                 </div>
                 <div className="flex gap-x-4 pt-4">
                   <CustomButtons name={editData !== null ? "Update" : "Save"} />
