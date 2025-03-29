@@ -3,6 +3,7 @@ import { IoIosMenu } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
 
 import { useLayoutContext } from "../context/LayoutContextProvider";
+import Cookies from "cookie-universal";
 
 export const Header = () => {
   const { setShowMenu, showMenu } = useLayoutContext();
@@ -21,7 +22,13 @@ export const Header = () => {
             </button>
           </div>
           <h1 className="font-semibold text-lg">Artist Management System</h1>
-          <div className="inline-flex items-center cursor-pointer">
+          <div
+            className="inline-flex items-center cursor-pointer"
+            onClick={() => {
+              Cookies().remove("auth");
+              window.location.reload();
+            }}
+          >
             <h1 className="px-2">Log out</h1>
             <FiLogOut />
           </div>

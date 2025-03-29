@@ -13,6 +13,7 @@ import {
 } from "../hooks/useCustomHooks";
 import { baseUrl } from "../api/BaseUrl";
 import { useNavigate } from "react-router";
+import { CSVLink } from "react-csv";
 export const Artist = () => {
   const { data: artists, setData } = useFetchData(`${baseUrl}artist/get/`);
   const { createData } = useCreateData(`${baseUrl}artist/add/`);
@@ -169,8 +170,17 @@ export const Artist = () => {
                     className="w-full"
                   />
                 </div>
-                <div className="flex gap-x-4 pt-4">
+                <div className="flex justify-between gap-x-4 pt-4">
                   <CustomButtons name={editData !== null ? "Update" : "Save"} />
+                  {artists !== null && artists.length > 0 && (
+                    <CSVLink
+                      data={artists}
+                      filename={"artists.csv"}
+                      className="bg-primary text-txtprimary px-4 py-2 h-[44px]"
+                    >
+                      Download
+                    </CSVLink>
+                  )}
                 </div>
               </Form>
             )}
